@@ -1,118 +1,136 @@
 <!doctype html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Baby Hughy's Restaurant — Order Online</title>
 <style>
   :root{
-    --brand:rgb(255 200 26); --brand-dark:rgb(224 176 22); --on-brand:rgb(51 39 0);
-    --bg:rgb(13 13 13); --surface:rgb(26 26 26); --divider:rgb(77 77 77);
-    --ink:rgb(255 255 255); --ink2:rgb(214 214 214);
-    --maxw:1180px;
+    --brand:rgb(255 200 26);--brand-dark:rgb(224 176 22);--on-brand:rgb(51 39 0);
+    --bg:rgb(13 13 13);--surface:rgb(31 31 31);--divider:rgb(77 77 77);--ink:rgb(255 255 255);--ink2:rgb(214 214 214);--maxw:1180px;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0}
   body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);padding-bottom:84px}
-  a{color:inherit;text-decoration:none}
-  img{display:block}
+  a{color:inherit;text-decoration:none} img{display:block} button{font:inherit}
   .wrap{max-width:var(--maxw);margin:0 auto}
 
-  /* Header */
   header.top{background:var(--bg);padding:14px 16px 0;position:sticky;top:0;z-index:30}
   .toprow{display:flex;align-items:center;justify-content:space-between;gap:12px}
   .brandmark{display:flex;align-items:center;gap:10px;min-width:0}
   .logo{width:34px;height:34px;border-radius:9px;background:var(--brand);color:var(--on-brand);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:18px;flex:none}
   .bname{font-size:18px;font-weight:700;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .meta{color:var(--ink2);font-size:12.5px;margin-top:2px}
-  .meta .dot{opacity:.5;margin:0 6px}
-  .open{color:#4ade80;font-weight:600}
-  .signin{font-size:13px;font-weight:600;color:var(--ink);border:1px solid var(--divider);border-radius:999px;padding:7px 14px;flex:none}
-  .fulfil{display:inline-flex;background:var(--surface);border-radius:999px;padding:3px;margin:14px 0 6px;font-size:13px}
-  .fulfil button{border:0;background:transparent;color:var(--ink2);padding:7px 16px;border-radius:999px;font-weight:600;font:inherit;font-weight:600}
+  .meta .dot{opacity:.5;margin:0 6px}.open{color:#4ade80;font-weight:600}
+  .signin{font-size:13px;font-weight:600;border:1px solid var(--divider);border-radius:999px;padding:7px 14px;flex:none;background:transparent;color:var(--ink)}
+  /* Pickup/Delivery segmented toggle (Owner: inverse/white active) */
+  .fulfil{display:inline-flex;border:1px solid var(--divider);border-radius:999px;padding:3px;margin:14px 0 6px;gap:2px}
+  .fulfil button{border:0;background:transparent;color:var(--ink2);padding:8px 18px;border-radius:999px;font-weight:600}
   .fulfil .on{background:var(--ink);color:var(--bg)}
   .pickupbar{color:var(--ink2);font-size:12.5px;margin-bottom:10px}
 
-  /* sticky category pills (mobile) */
+  /* search (Owner: bordered, rounded, magnifier icon) */
+  .search{display:flex;align-items:center;gap:8px;height:40px;border:1px solid var(--divider);border-radius:10px;padding:0 12px;background:transparent}
+  .search:focus-within{border-color:var(--ink)}
+  .search svg{flex:none;opacity:.8}
+  .search input{flex:1;border:0;background:transparent;color:var(--ink);font:inherit;outline:none;min-width:0}
+  .search input::placeholder{color:var(--ink2);opacity:.8}
+
+  /* category pills (mobile): bordered, white-active */
   nav.pills{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid rgb(77 77 77/.5);padding:10px 12px;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
   nav.pills::-webkit-scrollbar{display:none}
-  nav.pills a{display:inline-block;margin-right:8px;padding:8px 14px;border-radius:999px;background:var(--surface);color:var(--ink2);font-size:13px;font-weight:600}
-  nav.pills a.active{background:var(--brand);color:var(--on-brand)}
+  nav.pills a{display:inline-block;margin-right:8px;padding:9px 14px;border:1px solid var(--divider);border-radius:999px;background:transparent;color:var(--ink2);font-size:13px;font-weight:600}
+  nav.pills a.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  .msearch{padding:10px 12px 0}
 
-  /* desktop left rail */
-  .shell{display:block}
-  aside.rail{display:none}
-
+  .shell{display:block} aside.rail{display:none}
   main{padding:6px 16px 24px}
   .modebar{background:rgb(255 200 26/.12);color:var(--brand);font-size:12px;padding:7px 12px;text-align:center;border-radius:10px;margin:8px 0}
 
-  /* most ordered carousel */
   .sec-h{font-size:20px;font-weight:700;margin:18px 2px 10px}
   .scroller{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none}
   .scroller::-webkit-scrollbar{display:none}
-  .pcard{flex:none;width:150px;background:var(--surface);border-radius:14px;overflow:hidden}
+  .pcard{flex:none;width:150px;background:var(--surface);border-radius:14px;overflow:hidden;text-align:left;border:0;color:inherit;padding:0;cursor:pointer}
   .pcard .pimg{width:100%;aspect-ratio:1/1;object-fit:cover;background:#222}
   .pcard .pmeta{padding:9px 10px 11px}
   .pcard .pname{font-size:13.5px;font-weight:600;line-height:1.25;height:34px;overflow:hidden}
   .pcard .pprice{font-size:13px;color:var(--ink2);margin-top:3px}
 
-  /* item rows */
   .cat{font-size:21px;font-weight:700;margin:26px 2px 6px}
   .items{display:flex;flex-direction:column}
-  .item{display:flex;gap:14px;padding:14px 2px;border-bottom:1px solid rgb(77 77 77/.5);align-items:stretch}
+  .item{display:flex;gap:14px;padding:14px 2px;border-bottom:1px solid rgb(77 77 77/.5);align-items:stretch;cursor:pointer;background:none;border-left:0;border-right:0;border-top:0;width:100%;text-align:left;color:inherit}
   .item .b{flex:1;min-width:0;display:flex;flex-direction:column}
   .item h3{margin:0;font-size:15.5px;font-weight:600;line-height:1.25}
-  .item .price{font-size:14px;margin:5px 0 6px;color:var(--ink)}
+  .item .price{font-size:14px;margin:5px 0 6px}
   .item .desc{margin:0;color:var(--ink2);font-size:12.5px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .item .pop{display:inline-block;font-size:10.5px;font-weight:700;color:var(--on-brand);background:var(--brand);border-radius:5px;padding:1px 6px;margin-left:6px;vertical-align:middle}
-  .thumb{width:104px;height:104px;border-radius:12px;object-fit:cover;background:#222;flex:none;align-self:center}
-  .noimg{width:104px;height:104px;border-radius:12px;background:#1d1d1d;flex:none;align-self:center}
-  .add{position:absolute;right:8px;bottom:8px;width:30px;height:30px;border-radius:50%;border:1px solid var(--divider);background:rgb(13 13 13/.85);color:var(--ink);font-size:18px;line-height:26px;text-align:center}
+  /* fixed-size square image + add button on EVERY image, identical across variants */
   .imgwrap{position:relative;flex:none;align-self:center}
+  .thumb{width:104px;height:104px;border-radius:12px;object-fit:cover;background:#222;display:block}
+  .noimg{width:104px;height:104px;border-radius:12px;background:#1d1d1d}
+  .add{position:absolute;right:7px;bottom:7px;width:30px;height:30px;border-radius:50%;border:1px solid var(--divider);background:rgb(13 13 13/.85);color:var(--ink);font-size:18px;line-height:26px;text-align:center;padding:0}
 
-  /* compare */
   .cmp{display:flex;gap:8px;margin-top:8px}
   .cmp figure{margin:0;flex:1;text-align:center}
+  .cmp .imgwrap{width:100%}
   .cmp img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px;background:#222}
   .cmp figcaption{font-size:12px;color:var(--ink2);margin-top:5px}
 
-  /* sticky bottom CTA */
-  .cta{position:fixed;left:0;right:0;bottom:0;z-index:40;background:linear-gradient(to top,var(--bg) 70%,transparent);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
-  .cta button{width:100%;max-width:var(--maxw);margin:0 auto;display:block;background:var(--brand);color:var(--on-brand);border:0;border-radius:13px;padding:15px;font-size:16px;font-weight:700;font-family:inherit}
+  .cta{position:fixed;left:0;right:0;bottom:0;z-index:25;background:linear-gradient(to top,var(--bg) 70%,transparent);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+  .cta button{width:100%;max-width:var(--maxw);margin:0 auto;display:block;background:var(--brand);color:var(--on-brand);border:0;border-radius:13px;padding:15px;font-size:16px;font-weight:700}
+
+  /* item detail modal */
+  .modal{position:fixed;inset:0;z-index:60;display:none}
+  .modal.open{display:block}
+  .modal .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.6)}
+  .modal .sheet{position:absolute;left:0;right:0;bottom:0;top:0;background:var(--bg);overflow-y:auto;display:flex;flex-direction:column}
+  .modal .close{position:fixed;top:12px;right:12px;z-index:2;width:38px;height:38px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:20px}
+  .modal .hero{width:100%;aspect-ratio:1/1;object-fit:cover;background:#222;flex:none}
+  .modal .mc{padding:18px 18px 120px}
+  .modal .mname{font-size:22px;font-weight:700;margin:0 0 6px}
+  .modal .mprice{font-size:16px;color:var(--ink);margin:0 0 10px}
+  .modal .mdesc{color:var(--ink2);font-size:14px;line-height:1.5;margin:0}
+  .modal .mfoot{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:1px solid rgb(77 77 77/.5);padding:12px 16px calc(12px + env(safe-area-inset-bottom));display:flex;gap:12px;align-items:center}
+  .qty{display:flex;align-items:center;gap:14px;border:1px solid var(--divider);border-radius:999px;padding:6px 10px}
+  .qty button{border:0;background:transparent;color:var(--ink);font-size:20px;width:24px}
+  .qty span{min-width:16px;text-align:center;font-weight:600}
+  .addcart{flex:1;background:var(--brand);color:var(--on-brand);border:0;border-radius:13px;padding:15px;font-size:15px;font-weight:700}
 
   @media (min-width:768px){
     body{padding-bottom:24px}
-    nav.pills{display:none}
-    .shell{display:grid;grid-template-columns:240px 1fr;gap:28px;max-width:var(--maxw);margin:0 auto;padding:0 16px}
+    nav.pills,.msearch{display:none}
+    .shell{display:grid;grid-template-columns:248px 1fr;gap:28px;max-width:var(--maxw);margin:0 auto;padding:0 16px}
     aside.rail{display:block;position:sticky;top:14px;align-self:start;padding-top:8px}
-    aside.rail .search{width:100%;background:var(--surface);border:0;border-radius:10px;padding:11px 12px;color:var(--ink);font:inherit;margin-bottom:12px}
+    aside.rail .railnav{margin-top:12px}
     aside.rail a{display:block;padding:9px 12px;border-radius:9px;color:var(--ink2);font-size:14px;font-weight:600;margin-bottom:2px}
     aside.rail a.active{background:var(--surface);color:var(--ink)}
     main{padding:6px 0 40px}
     .items{display:grid;grid-template-columns:1fr 1fr;gap:0 32px}
-    .item{border-bottom:1px solid rgb(77 77 77/.5)}
     .cta{display:none}
     .pcard{width:170px}
+    .modal .sheet{top:5vh;bottom:5vh;left:50%;transform:translateX(-50%);width:520px;max-width:92vw;border-radius:18px;overflow:hidden}
+    .modal .sheet .scrollarea{overflow-y:auto}
+    .modal .close{position:absolute}
+    .modal .mfoot{position:absolute}
+    .modal .hero{aspect-ratio:16/11}
   }
-</style>
-</head>
+</style></head>
 <body>
 <header class="top"><div class="wrap">
   <div class="toprow">
     <div class="brandmark"><div class="logo">B</div>
       <div style="min-width:0"><div class="bname">Baby Hughy's Restaurant</div>
-      <div class="meta"><span class="open">Open</span><span class="dot">·</span>Closes 9 PM<span class="dot">·</span>Pickup ~20 min</div></div>
-    </div>
-    <div class="signin">Sign in</div>
+      <div class="meta"><span class="open">Open</span><span class="dot">·</span>Closes 9 PM<span class="dot">·</span>Pickup ~20 min</div></div></div>
+    <button class="signin">Sign in</button>
   </div>
   <div class="fulfil"><button class="on">Pickup</button><button>Delivery</button></div>
   <div class="pickupbar">Pickup from 715 N Varnell Rd · Ready in about 20 minutes</div>
 </div></header>
 
+<div class="msearch"><div class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgb(214 214 214)" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg><input id="msearch-input" type="text" placeholder="Search the menu" aria-label="Search the menu"></div></div>
 <nav class="pills" id="pills"></nav>
 
 <div class="shell">
-  <aside class="rail"><input class="search" placeholder="Search the menu"><div id="rail"></div></aside>
+  <aside class="rail"><div class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgb(214 214 214)" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg><input id="rail-search-input" type="text" placeholder="Search the menu" aria-label="Search the menu"></div><div class="railnav" id="rail"></div></aside>
   <main>
     <div id="modebar"></div>
     <div id="popular"></div>
@@ -120,60 +138,99 @@
   </main>
 </div>
 
-<div class="cta"><button>Start order</button></div>
+<div class="cta"><button id="ctaBtn">Start order</button></div>
+
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="backdrop" data-close></div>
+  <div class="sheet"><div class="scrollarea">
+    <button class="close" data-close aria-label="Close">✕</button>
+    <img class="hero" id="mhero" alt="">
+    <div class="mc"><h2 class="mname" id="mname"></h2><div class="mprice" id="mprice"></div><p class="mdesc" id="mdesc"></p></div>
+  </div>
+    <div class="mfoot"><div class="qty"><button id="qminus">−</button><span id="qval">1</span><button id="qplus">+</button></div>
+      <button class="addcart" id="addcart">Add to cart</button></div>
+  </div>
+</div>
 
 <script>
 const MENU = {"brand":"Baby Hughy's Restaurant","brandId":"vX4kLBeo8rTw","locationId":"SC6BRIBtjru0","categories":[{"name":"Pizza","items":[{"id":"iZRLIVWU7e5g","name":"Italian Pizza - Half Moon","description":"GARLIC MARINARA BASE, ITALIAN SAUSAGE, ROASTED RED PEPPERS, SALAMI, RED ONONS AND ITALIAN SEASONING","price":13.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/d4bcdb8a-9145-41fc-a365-5fcde92d8735?v=7705423143","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/iZRLIVWU7e5g-2ef8949622beaa15.png?v=3900195091","hasPair":true},{"id":"3Sus1AurdEAH","name":"Classic Pizza - Half Moon","description":"MARINARA BASE WITH MOZZ CHEESE, PEPPERONI, SAUSAGE AND MUSHROOMS","price":13.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/4e8d765c-b017-4296-afe3-e54fb7382450?v=1090734415","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/3Sus1AurdEAH-a496f368de327b8e.png?v=2033307213","hasPair":true},{"id":"KGsD4Pc1lyr5","name":"Tuscan Chicken Pizza - Half Moon","description":"MARINARA BASE, MOZZ CHEESE, TUSCAN CHICKEN, ROASTED RED PEPPERS, ROASTED ROMA TOMATOES, SPINACH, LEMON GARLIC AIOLI AND CREMINI MUSHROOMS","price":15.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/b4a55a9c-d947-4a05-a1d0-b88169f9aec8?v=3163304695","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/KGsD4Pc1lyr5-a943407461ca537e.png?v=6715461776","hasPair":true},{"id":"4VWKoTLCmthD","name":"Chicken Bacon Ranch - Half Moon","description":"RANCH BASE WITH MOZZ CHEESE, CHICKEN, BACON, AND RED ONION","price":15.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/e45ca3cb-aa69-4afe-b351-e13fe9921b1e?v=5942753750","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/4VWKoTLCmthD-dd95edec1c070ad7.png?v=5581595696","hasPair":true},{"id":"DyLLlj3jKWu6","name":"MEXICAN PIZZZA HALF MOON","description":"BIRRIA BASE WITH ROASTED SHREDDED PORK SHOULDER, TOPPED WITH SWEET AND CHIPOTLE PEPPERS, RED ONIONS, ROASTED ROMA TOMATOES, JALEPENOS, CORN SALSA, AVOCADO AND FINISHED WITH FRESH CILANTRO, GOAT AND OAXACA CHEESE AND DRIZZLED WITH BIRRIA AND A DOLLOP OF SOUR CREAM","price":15.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/46ac7894-3f99-449b-b2b6-f269ea7b3825.jpg?v=9323281228","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/DyLLlj3jKWu6-c6063aac8b91298b.png?v=9741997621","hasPair":true},{"id":"yA8IcxKxgDHn","name":"Mighty Meaty Pizza - Half Moon","description":"MARINARA BASE, MOZZ CHEESE, PEPPERONI, SALAMI, ITALIAN SAUSAGE, HAM AND BACON","price":15.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/a3b4eadb-dc20-493e-9071-57a09053e1e0?v=6437211105","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/yA8IcxKxgDHn-089c41232cccbc74.png?v=6838525020","hasPair":true},{"id":"QvRHT48KqNCb","name":"Philly Pizza - Half Moon","description":"MARINARA BASE, MOZZ CHEESE, SHAVED RIBEYE, ONIONS, MUSHROOMS AND PEPPERS TOPPED WITH MIXED CHEESE AND QUESO DRIZZLED CHEESE SAUCE","price":15.89,"popular":false,"before":"https://static-content.owner.com/funnel/images/8cb27276-13bf-4344-a8ec-4194e5753aca?v=8367194336","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/QvRHT48KqNCb-52270017712d58dd.png?v=8266133288","hasPair":true},{"id":"Fy5IYZKdGf71","name":"Buffalo Chicken Pizza - Half Moon","description":"BUFFALO RANCH BASE, MOZZ CHEESE, BUFFALO CHICKEN, BLUE CHEEESE CRUMBLES, RED ONIONS AND CELERY","price":13.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/fb865c16-c81f-4354-a998-65970a2777d2?v=4365097370","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/Fy5IYZKdGf71-fc99e1ca126071a0.png?v=1875057397","hasPair":true},{"id":"fxvc3Gg4g2Qa","name":"Hawaiian Pizza - Half Moon","description":"MARINARA BASE, MOZZ CHEESE, PINEAPPLE, BACON AND TOPPED WITH SCALLIONS","price":14.89,"popular":false,"before":"https://static-content.owner.com/funnel/images/06cfa6bf-a76a-49e1-becd-c5e3c537e7d5?v=6427545751","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/fxvc3Gg4g2Qa-e803f61e0e95a8a1.png?v=5528787421","hasPair":true},{"id":"EYPaTPR8aO7p","name":"Supreme Pizza - Half Moon","description":"MARINARA BASE, MOZZ CHEESE, HAM, PEPPERONI, ITALIAN SAUSAGE, GREEN AND RED BELL PEPPERS, ONIONS, MUSHROOMS AND BLACK OLIVES","price":15.29,"popular":false,"before":"https://static-content.owner.com/funnel/images/f5ad82de-c63e-42a0-bb6f-538450084127?v=7235534907","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/EYPaTPR8aO7p-877c19af0e25546c.png?v=3262572707","hasPair":true},{"id":"pCVyApGpAjvM","name":"Buffalo Chicken Pizza - Big Baby","description":"BUFFALO RANCH BASE, MOZZ CHEESE, BUFFALO CHICKEN, BLUE CHEEESE CRUMBLES, RED ONIONS AND CELERY","price":25.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/711b5021-14b7-4fbc-8133-b535e4535378?v=4366697402","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/pCVyApGpAjvM-65794859c1e17d1d.png?v=0921601484","hasPair":true},{"id":"EhylsI5dGaaa","name":"Classic Pizza - Big Baby","description":"MARINARA BASE WITH MOZZ CHEESE, PEPPERONI, SAUSAGE AND MUSHROOMS","price":21.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/d37dc3da-2096-4832-96b7-9fd4b6db3ced?v=5178896162","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/EhylsI5dGaaa-cb05da98a20e7bfa.png?v=9069664741","hasPair":true},{"id":"zssvRzewWU3d","name":"Chicken Bacon Ranch - Big Baby","description":"RANCH BASE WITH MOZZ CHEESE, CHICKEN, BACON, AND RED ONION","price":23.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/bcbbe590-843e-4e37-9e92-78bdbf84d44a?v=8955047815","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/zssvRzewWU3d-b7b18d480a8bb176.png?v=2703254172","hasPair":true},{"id":"yITs0mzLeBRJ","name":"Hawaiian Pizza - Big Baby","description":"MARINARA BASE, MOZZ CHEESE, PINEAPPLE, BACON AND TOPPED WITH SCALLIONS","price":24.69,"popular":false,"before":"https://static-content.owner.com/funnel/images/f0486243-98f8-4d0c-95c9-8520ec9a6f73?v=3758301029","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/yITs0mzLeBRJ-be16ff2b61ff0601.png?v=1409666154","hasPair":true},{"id":"9nEj2W6HTxAX","name":"Italian Pizza - Big Baby","description":"GARLIC MARINARA BASE, ITALIAN SAUSAGE, ROASTED RED PEPPERS, SALAMI, RED ONONS AND ITALIAN SEASONING","price":21.89,"popular":false,"before":"https://static-content.owner.com/funnel/images/339d09ff-0ec4-4d89-a799-07452062d5ff?v=4691507135","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/9nEj2W6HTxAX-135526765c2093ce.png?v=5246470212","hasPair":true},{"id":"f5uuffHIFWpI","name":"MEXICAN BIG BABY","description":"BIRRIA BASE WITH ROASTED SHREDDED PORK SHOULDER, TOPPED WITH SWEET AND CHIPOTLE PEPPERS, RED ONIONS, ROASTED ROMA TOMATOES, JALEPENOS, CORN SALSA, AVOCADO AND FINISHED WITH FRESH CILANTRO, GOAT AND OAXACA CHEESE AND DRIZZLED WITH BIRRIA AND A DOLLOP OF SOUR CREAM","price":23.89,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"urBYG3G3gq7Q","name":"Mighty Meaty Pizza - Big Baby","description":"MARINARA BASE, MOZZ CHEESE, PEPPERONI, SALAMI, ITALIAN SAUSAGE, HAM AND BACON","price":25.89,"popular":false,"before":"https://static-content.owner.com/funnel/images/05ae99e2-2159-425b-8893-7cfbd0318b86?v=7118514460","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/urBYG3G3gq7Q-edab8a965b54f4f6.png?v=3283314533","hasPair":true},{"id":"kWhihidiBI5R","name":"Philly Pizza - Big Baby","description":"MARINARA BASE, MOZZ CHEESE, SHAVED RIBEYE, ONIONS, MUSHROOMS AND PEPPERS TOPPED WITH MIXED CHEESE AND QUESO DRIZZLED CHEESE SAUCE","price":22.13,"popular":false,"before":"https://static-content.owner.com/funnel/images/08eb812e-4695-4ce7-a293-7ee3ba9e04d5?v=1276024503","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/kWhihidiBI5R-aa5113d9ba131f27.png?v=1204850355","hasPair":true},{"id":"ASgfuEb4nJei","name":"Supreme Pizza - Big Baby","description":"MARINARA BASE, MOZZ CHEESE, HAM, PEPPERONI, ITALIAN SAUSAGE, GREEN AND RED BELL PEPPERS, ONIONS, MUSHROOMS AND BLACK OLIVES","price":22.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/fa99c5db-aa37-4e02-8518-5df9fc6d8c5c?v=0370608593","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/ASgfuEb4nJei-90b08104de79787f.png?v=9721271614","hasPair":true},{"id":"G9tlDoAlP7aJ","name":"Tuscan Chicken Pizza - Big Baby","description":"MARINARA BASE, MOZZ CHEESE, TUSCAN CHICKEN, ROASTED RED PEPPERS, ROASTED ROMA TOMATOES, SPINACH, LEMON GARLIC AIOLI AND CREMINI MUSHROOMS","price":21.13,"popular":false,"before":"https://static-content.owner.com/funnel/images/22efa6bd-eca7-48fe-ba5b-9b6239d697e6?v=5777451367","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/G9tlDoAlP7aJ-f1fa0fa64d8d3ad3.png?v=8174574127","hasPair":true},{"id":"O49Bc1xZsjLL","name":"Pepperoni Half Moon","description":"","price":13.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/f532c4cf-97f7-4ae8-adcc-f5f58d004fc7?v=2911899826","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/O49Bc1xZsjLL-c3734b0dc0347fdc.png?v=4775216164","hasPair":true},{"id":"TqIvpPbVKclM","name":"Cheese Pizza HALF MOON","description":"","price":11.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/239ab9a7-f637-42ec-b2e9-86f0e145e0e4?v=5272190138","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/TqIvpPbVKclM-f715cc1c41547cd4.png?v=0450008229","hasPair":true},{"id":"sCc9f8IDrIyX","name":"CHEESE PIZZA BIG BABY","description":"","price":16.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/45ce4877-ae8f-4fac-8bda-3904d3dd3a61?v=0951819335","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/sCc9f8IDrIyX-ff5a26599cadc936.png?v=6338218690","hasPair":true},{"id":"tbUc0A0D6vL5","name":"Pepp Big Baby","description":"","price":18.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/3e909734-4ddb-451d-abd7-d93b4fae26a0?v=7396374773","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/tbUc0A0D6vL5-c79c9765cf617806.png?v=0301911599","hasPair":true},{"id":"xiTxiYUo2VjA","name":"Gluten Free Thin Crust","description":"","price":16.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/8f598c78-0650-4b16-aa6a-0a222d2244a2.jpg?v=0349043297","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/xiTxiYUo2VjA-225fac8a63e1c8ff.png?v=8214695406","hasPair":true},{"id":"qigtNkYHYlLz","name":"Veggie Pesto Pizza Big Baby","description":"OLIVE OIL BASE, ROASTED ROMA TOMATOES, BANANNA RED AND GREEN PEPPERS, SPINACH, HOUSE MADE PESTO, GOAT CHEESE AND FINSIHED WITH GARLIC AIOLI DRIZZLE","price":18.1,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"zWUs3wGNRGHC","name":"Veggie Pesto Half Moon","description":"OLIVE OIL BASE, ROASTED ROMA TOMATOES, BANANNA RED AND GREEN PEPPERS, SPINACH, HOUSE MADE PESTO, GOAT CHEESE AND FINSIHED WITH GARLIC AIOLI DRIZZLE","price":11.11,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"JdEU1XRmk6DK","name":"Specialty Pizza Big Baby","description":"","price":20.06,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"vcldxZPvYmcm","name":"Specialty Half Moon","description":"","price":12.99,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"kMuFEzTbel9m","name":"Steak House Big Baby","description":"","price":26.68,"popular":false,"before":"https://static-content.owner.com/funnel/images/a89bd9be-906f-4326-8163-c397c54bbcf5?v=4001840081","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/kMuFEzTbel9m-0cb2f4053a9330e3.png?v=4286052428","hasPair":true},{"id":"07Jo0bBIStAY","name":"Steak House Pizza Half Moon","description":"","price":15.96,"popular":false,"before":"https://static-content.owner.com/funnel/images/56c49062-025d-42d8-b9a5-04d1cf12c651?v=3036544711","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/07Jo0bBIStAY-b293d6960b8ec499.png?v=8790552601","hasPair":true},{"id":"gdSSgVH4BmML","name":"Detroit Gluten Free","description":"","price":14.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/7b24ee49-2cdb-4142-b72d-7013204200f4.jpg?v=2649143796","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/gdSSgVH4BmML-281fec9dc28ba1a0.png?v=9630374622","hasPair":true},{"id":"TnMHUQ6f1eat","name":"Add Beef","description":"","price":2.5,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"nhz0SSLmcJXt","name":"DEEP DISH","description":"UP TO 3 TOPPINS","price":15.49,"popular":false,"before":"https://static-content.owner.com/funnel/images/810a7704-7ca9-4172-b99f-965e10ed82e5?v=6535769793","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/nhz0SSLmcJXt-f94aa2fb228b8777.png?v=4335953799","hasPair":true},{"id":"NOjT9ixsF1HK","name":"Deep Dish Detroit Style Pan Pizza","description":"","price":14.99,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"LXOs08gZWhKC","name":"10\" Gluten Free Pizza","description":"","price":15.99,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"CCUlXt3yuTyq","name":"BBQ Mac - Half Moon","description":"BBQ BASE WITH FRESH SMOKED PULLED PORK, MOZZ CHEESE, MACARONI, CHEESE SAUCE TOPPED WITH SCALLIONS AND DRIZZLED WITH QUESO AND CRISPY ONION STRAWS","price":17.96,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"FBwAgbFVckIG","name":"BBQ Mac - Big Baby","description":"BBQ BASE WITH FRESH SMOKED PULLED PORK, MOZZ CHEESE, MACARONI, CHEESE SAUCE TOPPED WITH SCALLIONS AND DRIZZLED WITH QUESO AND CRISPY ONION STRAWS","price":26.89,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"NgMaspby8obo","name":"THE MARGARITA BIG BABY","description":"GARLIC OLIVE OIL BASE WITH BUFFALO MOZZ CHEESE, FRESH SLICED TOMATOES, DUSTED WITH OUR HOUSE SEASONING BLEND AND RICH PESTO AND FRESH BASIL","price":19.56,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"3SoUjKtbtJQZ","name":"THE MARGARITA HALF MOON","description":"GARLIC OLIVE OIL BASE WITH BUFFALO MOZZ CHEESE, FRESH SLICED TOMATOES, DUSTED WITH OUR HOUSE SEASONING BLEND AND RICH PESTO AND FRESH BASIL","price":12.15,"popular":false,"before":null,"after":null,"hasPair":false}]},{"name":"Build Your Own Pizza","items":[{"id":"gIbzRci0AAoe","name":"BYO Cheese And Marinara Pizza Half Moon","description":"","price":13.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/ba060892-c9cf-4d45-876e-2597c1e4f4cd.jpg?v=5658387894","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/gIbzRci0AAoe-72210f70bcb8fcb4.png?v=5267169319","hasPair":true},{"id":"XM0LJR04L5si","name":"BYO Cheese And Marinara Pizza Big Baby","description":"","price":18.99,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"xiTxiYUo2VjA","name":"Gluten Free Thin Crust","description":"","price":16.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/8f598c78-0650-4b16-aa6a-0a222d2244a2.jpg?v=0349043297","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/xiTxiYUo2VjA-225fac8a63e1c8ff.png?v=8214695406","hasPair":true},{"id":"62dPZnoiqwN5","name":"Cheese & Marinara With One Topping Pizza - Big Baby","description":"","price":19.24,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"rAbxB8hXC534","name":"Cheese & Marinara With One Topping Pizza - Half Moon","description":"","price":13.99,"popular":false,"before":null,"after":null,"hasPair":false}]},{"name":"Appetizers","items":[{"id":"eE4R6FewDg59","name":"Garlic Knots","description":"","price":10.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/c26fc2a5-c4c2-4462-8136-fc0cf76efa56?v=5865956247","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/eE4R6FewDg59-cef62ee69ca6a49d.png?v=0529158079","hasPair":true},{"id":"BBNwEGTxplHX","name":"Cheesy Bread Sticks","description":"","price":12.29,"popular":false,"before":"https://static-content.owner.com/funnel/images/e7924ab8-9c3e-4299-af79-45cf83e903a6?v=1159623406","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/BBNwEGTxplHX-58b21a9f559096e3.png?v=1018523643","hasPair":true},{"id":"TbFvoFFVIIZt","name":"Ranchero Cheese Bread","description":"","price":13.25,"popular":true,"before":"https://static-content.owner.com/funnel/images/395b46fc-d58e-4411-acc1-935e4b01230e?v=2349222206","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/TbFvoFFVIIZt-05c7a564538a3446.png?v=5578917830","hasPair":true}]},{"name":"Calzones","items":[{"id":"i0gNupczQLK8","name":"The Mighty Meaty Calzone","description":"","price":14.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/b9c95bd3-81bd-401f-b338-66a2f7c2ea81?v=8758142638","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/i0gNupczQLK8-9870cf543ab37035.png?v=5800214195","hasPair":true},{"id":"3Syp5Evb3bTa","name":"The Philly Cheesesteak Calzones","description":"Shaved Ribeye, onions, mushrooms and peppers topped with mixed cheese and melted drizzled cheese sauce","price":17.89,"popular":false,"before":"https://static-content.owner.com/funnel/images/94066841-b23c-4300-9422-8b78e5e573bb?v=7733599257","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/3Syp5Evb3bTa-0868de40233e5a07.png?v=7939220044","hasPair":true},{"id":"l76kC75xD1km","name":"The Tuscan Chicken Calzones","description":"","price":13.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/6d545142-a74f-4a4a-acf6-cbdff33cfd99?v=5473614519","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/l76kC75xD1km-24af02de0f91ea4d.png?v=6373544305","hasPair":true},{"id":"o5XNw94qng1F","name":"The Veggie Calzones","description":"","price":11.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/ffa52256-52df-4a48-b740-72b36e670337?v=3076917692","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/o5XNw94qng1F-be1ba46851f495f8.png?v=5214497603","hasPair":true},{"id":"SHJ9nrbytYN3","name":"Build Your Own Calzones","description":"","price":13.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/a6400701-145d-4903-b46c-ecce1e2f02b7?v=2542368242","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/SHJ9nrbytYN3-31fb055099af343a.png?v=5283380538","hasPair":true},{"id":"Btnx5hRpBkMz","name":"Add Extra Marinara","description":"","price":0.78,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"IGhCm7X7xRXW","name":"BUFFALO CHICKEN CALZONE","description":"","price":17.89,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"CAnut21J5gDd","name":"Extra Cup Of Marinara","description":"","price":0.78,"popular":false,"before":null,"after":null,"hasPair":false}]},{"name":"Smoked Wings","items":[{"id":"pLP6daDEMJHP","name":"Plain Jane","description":"","price":13.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/1195c25a-efea-47b1-a570-ad8afb56a4e4?v=9074339027","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/pLP6daDEMJHP-de3f88a08b5b1698.png?v=0457470301","hasPair":true},{"id":"fkoMDABRBPhS","name":"Spicy Peach","description":"","price":13.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/a0a96e5b-1a1e-41cd-80f5-23457127b352.jpg?v=9172446878","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/fkoMDABRBPhS-991b67b0204f8ccd.png?v=6153319933","hasPair":true},{"id":"ILUfZrVeaLIR","name":"Mild","description":"","price":13.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/5be24d21-3e5d-4ccb-afdf-a89221310904?v=9461167403","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/ILUfZrVeaLIR-06ce57afc88000e7.png?v=2189564357","hasPair":true},{"id":"Hkl5IoWFDlaC","name":"Lemon Pepper Wings","description":"","price":13.99,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"CL9ExyFBBTI4","name":"Add Extra Sauce","description":"","price":0.78,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"BbsAnjcW8K2k","name":"BBQ Wings","description":"","price":13.99,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"tCjGasHBgxEH","name":"Carolina Gold Bbq Wings","description":"","price":13.99,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"k7jTGBFvvk31","name":"Nashville Hot","description":"","price":13.99,"popular":false,"before":null,"after":null,"hasPair":false}]},{"name":"Burgers, Subs & Sandwiches","items":[{"id":"uftUcFYX3Eu4","name":"Smash Burger","description":"","price":12.99,"popular":true,"before":"https://static-content.owner.com/funnel/images/4f0d9bca-7e88-4328-b294-2cd9647c58e8?v=4720208585","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/uftUcFYX3Eu4-92442571fe6b898e.png?v=0354361409","hasPair":true},{"id":"9fwskIvsXfLW","name":"Meatball Sub","description":"","price":12.99,"popular":true,"before":"https://static-content.owner.com/funnel/images/36e8a736-e35d-4183-999b-17276399f822?v=4012576593","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/9fwskIvsXfLW-ab0ecd15ad4c7a9f.png?v=7731160380","hasPair":true},{"id":"tj9RDAmwvZKB","name":"Hot Ham And Cheese","description":"","price":12.99,"popular":true,"before":"https://static-content.owner.com/funnel/images/681cfb21-b4fb-4c2c-be10-643114b6ceef?v=3902574151","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/tj9RDAmwvZKB-6756724ce94f82c6.png?v=4035987171","hasPair":true},{"id":"gdMT8Nl70hqi","name":"The Italian Sub","description":"","price":12.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/ba7465da-1255-4d35-ab77-4ed1236867a2?v=0987134044","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/gdMT8Nl70hqi-b97dc391aaf8c48a.png?v=2012842073","hasPair":true},{"id":"JzItCnlmCCS0","name":"Chow Burger","description":"","price":11.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/4de22bc4-e71d-4e38-90e2-c4cad04d61f2?v=9905595027","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/JzItCnlmCCS0-54c6235a3899924e.png?v=5473079777","hasPair":true},{"id":"ccgWJZKn7NKF","name":"Philly Sandwich","description":"","price":13.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/1c40b813-f2d1-4db7-9273-33a755347792?v=8930566882","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/ccgWJZKn7NKF-0ad465d0689303a0.png?v=5199694322","hasPair":true},{"id":"6wBqi7n3oxsH","name":"Grilled Chicken Sandwich","description":"","price":12.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/8b1276f6-1ca5-4efa-b94f-be38d8dac91b?v=8477178285","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/6wBqi7n3oxsH-0b45619a0b88f202.png?v=2634709661","hasPair":true},{"id":"dYBp6RCD31iX","name":"Fried Chicken Sandwich","description":"","price":12.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/c04e62b9-3216-4970-84f3-12076573faa1?v=3442972873","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/dYBp6RCD31iX-9b8de0e11c2b5713.png?v=7027177209","hasPair":true},{"id":"lCStSDqa23WU","name":"Fried Chicken Sandwhich Add Bacon","description":"","price":12.99,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"vvjI83yBnn6m","name":"Add Side Of Ranch","description":"","price":0.78,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"HlxamyzvPf8n","name":"REUBEN SANDWICH","description":"","price":13.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/b6354e81-97f3-4ca2-84be-10c88f4bd677?v=6606790748","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/HlxamyzvPf8n-d7825350bf49f318.png?v=1016691180","hasPair":true},{"id":"FDadB2XAXcCu","name":"MONTE CRISTO","description":"","price":14.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/c017f5b9-b2d4-4ca1-89c6-5707e60716e4?v=5822801678","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/FDadB2XAXcCu-bf3f6cf1bd40f1e8.png?v=5731081091","hasPair":true},{"id":"tr6TDi4Y37mF","name":"CHICKEN SALAD SAND","description":"","price":10.89,"popular":false,"before":"https://static-content.owner.com/funnel/images/97bba0e2-0a84-46b7-b5a4-d41f2d68c9fa?v=5040346613","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/tr6TDi4Y37mF-a4e9bbe19b55eb06.png?v=3699010240","hasPair":true},{"id":"3C2Pp2M0mL9G","name":"Chicken Parm Sandwich","description":"","price":15.69,"popular":false,"before":"https://cloverstatic.com/menu-assets/items/YW12PV20MMY8M.jpeg","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/3C2Pp2M0mL9G-51d5f9116d5b14d2.png?v=6615708395","hasPair":true},{"id":"4p0DytXrrFAy","name":"Cuban","description":"","price":15.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/2defa9df-32e4-4531-8cc8-6e01eb09f519?v=4078930756","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/4p0DytXrrFAy-f707958e6889b499.png?v=9947323727","hasPair":true},{"id":"FqKia6ZCY6az","name":"Pork Tenderloin Sandwich","description":"","price":13.99,"popular":false,"before":null,"after":null,"hasPair":false}]},{"name":"Salads","items":[{"id":"R7HQDGyYtYpK","name":"Big Baby Chef Salad","description":"","price":12.89,"popular":false,"before":"https://static-content.owner.com/funnel/images/7a4bf1e1-9cff-438a-8977-50e2ee6300e9?v=8542992815","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/R7HQDGyYtYpK-87a84c6cf00d8ca3.png?v=3677225532","hasPair":true},{"id":"TMvDXQceqYH1","name":"Big Baby House Salad","description":"","price":10.89,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"GUBBJylfUoKg","name":"Ceaser Salad","description":"","price":11.69,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"thbh4JAJHvRK","name":"Side Salad","description":"","price":4.99,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"tAMTnDPUpVfN","name":"Add Extra Ham","description":"","price":1.56,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"HsbSush7kBkC","name":"Add Extra Egg","description":"","price":1.04,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"XtEAeQACxAup","name":"Add Extra Vegetables","description":"","price":1.04,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"fHVerDhkEcY9","name":"Add Extra Dressing","description":"","price":0.78,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"bWBx2oQLcX9Q","name":"Add Fried Chicken","description":"","price":2.6,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"CXxMhNnVdCsL","name":"Add Grilled Chicken","description":"","price":2.6,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"IIUguJK3gaMv","name":"Add Smoked Chicken","description":"","price":2.6,"popular":false,"before":null,"after":null,"hasPair":false}]},{"name":"Desserts","items":[{"id":"eaA9HMyIWuaP","name":"Bananna Pudding","description":"","price":4.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/58ea54fc-ad1e-47bf-9333-522b370e8f80?v=7904342824","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/eaA9HMyIWuaP-546b41b56f728195.png?v=9879325624","hasPair":true},{"id":"EEyd1Yd9nTFo","name":"Peach Cobbler","description":"","price":4.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/f94bf25a-e729-401f-8aa0-2bd897274bf5?v=2235723898","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/EEyd1Yd9nTFo-489045b30141cf2d.png?v=0974934316","hasPair":true}]},{"name":"Pasta","items":[{"id":"MeryDy5MC1rp","name":"CHICKEN ALFREDO","description":"","price":16.29,"popular":false,"before":"https://static-content.owner.com/funnel/images/fcae5b9b-1c30-40c7-a45b-480dfd7277e1?v=7697174981","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/MeryDy5MC1rp-e70b001246e9e2c0.png?v=2179994935","hasPair":true},{"id":"mNE3hHcpa4qi","name":"LASAGNA","description":"","price":14.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/32add85b-a576-4183-b50d-a9b7fef6fc47?v=3702115201","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/mNE3hHcpa4qi-79d562fa85459c2b.png?v=4087836931","hasPair":true},{"id":"Ho0fTJc4M5m5","name":"MEATBALL DINNER","description":"","price":13.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/df60accd-d826-446e-88ff-79230a26f7b4?v=5508864510","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/Ho0fTJc4M5m5-99828b0c12408af2.png?v=8341573841","hasPair":true},{"id":"Cf9KyCGDx3Mj","name":"CHICKEN BACON RANCH PIZZA BOWL","description":"","price":13.51,"popular":false,"before":"https://static-content.owner.com/funnel/images/aec86c81-fa1c-49d6-8102-84c0b9a8d4c2?v=1685076647","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/Cf9KyCGDx3Mj-8881e8a4247d63db.png?v=2361653772","hasPair":true},{"id":"UtqX9E6rEf4W","name":"BBQ MAC AND CHEESE BOWL","description":"","price":14.55,"popular":false,"before":null,"after":null,"hasPair":false}]},{"name":"CHEF ENTREES","items":[{"id":"yfWhYmLo89DG","name":"CHICKEN TENDERS","description":"","price":12.99,"popular":false,"before":"https://static-content.owner.com/funnel/images/dd592af6-2c34-4d29-81bc-f1ac29c78823.jpg?v=7298904037","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/yfWhYmLo89DG-1e0d13fb3dd7abeb.png?v=4951680554","hasPair":true},{"id":"n7T5Hn22EFcx","name":"(1)HOT DOG","description":"","price":6.66,"popular":false,"before":"https://cloverstatic.com/menu-assets/items/XK8YM6KFNEWYM.jpeg","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/n7T5Hn22EFcx-041b6175a0852ac3.png?v=7509204294","hasPair":true},{"id":"MCSPRrCvtaZU","name":"(2) HOT DOG","description":"","price":8.88,"popular":false,"before":"https://cloverstatic.com/menu-assets/items/QD3SC2DAND1V4.jpeg","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/MCSPRrCvtaZU-880cbf6daf699a93.png?v=5093173217","hasPair":true},{"id":"eRPIHoBPqYMq","name":"16 pc chicken tender platter","description":"","price":36.89,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"20TadKBYGzi7","name":"32 pc chicken tender platter","description":"","price":68.89,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"VbM8UF0WwIsf","name":"64 pc chicken tender platter","description":"","price":132.89,"popular":false,"before":null,"after":null,"hasPair":false}]},{"name":"KIDS MENU","items":[{"id":"h8gMkCBVOner","name":"KIDS CHICKEN TENDER","description":"","price":7.49,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"YLVQ9Zwhe40g","name":"KIDS CHILI DOG","description":"","price":4.2,"popular":false,"before":"https://static-content.owner.com/funnel/images/f5a1ef2b-9f56-4b34-87e5-d5a667960daf?v=1371999699","after":"https://static-content.owner.com/replatedMenuPhoto0526/plating-v0.72/SC6BRIBtjru0/YLVQ9Zwhe40g-862538c9b8389888.png?v=9574130531","hasPair":true},{"id":"49DFVBG5OKBe","name":"KIDS GRILLED CHEESE","description":"","price":4.09,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"tGw2bH8faqyC","name":"KIDS SPAGHETTI & MEATBALL","description":"","price":6.99,"popular":false,"before":null,"after":null,"hasPair":false}]},{"name":"SOUP","items":[{"id":"02lQryh40P86","name":"CHILI","description":"","price":5.44,"popular":false,"before":null,"after":null,"hasPair":false}]},{"name":"Sides","items":[{"id":"iPknJJ6OIN2p","name":"Fries","description":"","price":3.75,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"W9wErHdqIPz0","name":"Sweet Potato Fries","description":"","price":3.75,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"A5IGzEU0SLf8","name":"Side Of Fries","description":"","price":3.75,"popular":false,"before":null,"after":null,"hasPair":false},{"id":"7EhFCxxMpLzf","name":"Side Of Ranch","description":"","price":0.78,"popular":false,"before":null,"after":null,"hasPair":false}]}]};
 const CAROUSEL = ["TbFvoFFVIIZt","uftUcFYX3Eu4","9fwskIvsXfLW","tj9RDAmwvZKB"];
-const V = (new URLSearchParams(location.search).get('v') || 'before').toLowerCase();
+const V = (new URLSearchParams(location.search).get('v')||'before').toLowerCase();
 const money = n => n==null ? '' : '$' + n.toFixed(2);
 const photo = it => V==='after' ? (it.after||it.before) : it.before;
+const byId={}; MENU.categories.forEach(c=>c.items.forEach(it=>byId[it.id]=it));
 
-// nav (pills + rail)
+// nav
 const pills=document.getElementById('pills'), rail=document.getElementById('rail');
 MENU.categories.forEach((c,i)=>{
-  const a=document.createElement('a'); a.textContent=c.name; a.href='#cat'+i; if(i===0)a.className='active'; pills.appendChild(a);
-  const r=document.createElement('a'); r.textContent=c.name; r.href='#cat'+i; if(i===0)r.className='active'; rail.appendChild(r);
+  for(const host of [pills,rail]){ const a=document.createElement('a'); a.textContent=c.name; a.href='#cat'+i; a.dataset.cat='cat'+i; if(i===0)a.className='active'; host.appendChild(a); }
 });
 
-// most ordered carousel
-const byId={}; MENU.categories.forEach(c=>c.items.forEach(it=>byId[it.id]=it));
+// carousel
 const carItems=CAROUSEL.map(id=>byId[id]).filter(Boolean);
 if(carItems.length){
-  const pop=document.getElementById('popular');
-  pop.innerHTML='<div class="sec-h">Most ordered</div>';
+  const pop=document.getElementById('popular'); pop.innerHTML='<div class="sec-h">Most ordered</div>';
   const sc=document.createElement('div'); sc.className='scroller';
-  carItems.forEach(it=>{ const img=photo(it); const d=document.createElement('div'); d.className='pcard';
-    d.innerHTML=(img?'<img class="pimg" loading="lazy" src="'+img+'">':'<div class="pimg"></div>')+
-      '<div class="pmeta"><div class="pname">'+it.name+'</div><div class="pprice">'+money(it.price)+'</div></div>';
+  carItems.forEach(it=>{ const img=photo(it); const d=document.createElement('button'); d.className='pcard'; d.onclick=()=>openModal(it);
+    d.innerHTML=(img?'<img class="pimg" loading="lazy" src="'+img+'">':'<div class="pimg"></div>')+'<div class="pmeta"><div class="pname">'+it.name+'</div><div class="pprice">'+money(it.price)+'</div></div>';
     sc.appendChild(d); });
   pop.appendChild(sc);
 }
 
-// menu sections
+// menu
 const root=document.getElementById('menu');
 MENU.categories.forEach((c,i)=>{
   const h=document.createElement('h2'); h.className='cat'; h.id='cat'+i; h.textContent=c.name; root.appendChild(h);
   const list=document.createElement('div'); list.className='items';
   c.items.forEach(it=>{
-    const row=document.createElement('div'); row.className='item';
+    const row=document.createElement(V==='compare'&&it.hasPair?'div':'button'); row.className='item'; row.dataset.name=it.name.toLowerCase();
     if(V==='compare' && it.hasPair){
-      row.innerHTML='<div class="b"><h3>'+it.name+(it.popular?'<span class="pop">Popular</span>':'')+'</h3>'+
-        '<div class="price">'+money(it.price)+'</div>'+(it.description?'<p class="desc">'+it.description+'</p>':'')+
-        '<div class="cmp"><figure><img loading="lazy" src="'+it.before+'"><figcaption>Option 1</figcaption></figure>'+
-        '<figure><img loading="lazy" src="'+it.after+'"><figcaption>Option 2</figcaption></figure></div></div>';
+      row.style.cursor='default';
+      row.innerHTML='<div class="b"><h3>'+it.name+(it.popular?'<span class="pop">Popular</span>':'')+'</h3><div class="price">'+money(it.price)+'</div>'+(it.description?'<p class="desc">'+it.description+'</p>':'')+
+        '<div class="cmp"><figure><img loading="lazy" src="'+it.before+'"><figcaption>Option 1</figcaption></figure><figure><img loading="lazy" src="'+it.after+'"><figcaption>Option 2</figcaption></figure></div></div>';
     } else {
       const img=photo(it);
-      const thumb=img?('<div class="imgwrap"><img class="thumb" loading="lazy" src="'+img+'" alt="'+it.name+'"><button class="add">+</button></div>'):'<div class="noimg"></div>';
-      row.innerHTML='<div class="b"><h3>'+it.name+(it.popular?'<span class="pop">Popular</span>':'')+'</h3>'+
-        '<div class="price">'+money(it.price)+'</div>'+(it.description?'<p class="desc">'+it.description+'</p>':'')+'</div>'+thumb;
+      const thumb=img?('<div class="imgwrap"><img class="thumb" loading="lazy" src="'+img+'" alt="'+it.name+'"><span class="add">+</span></div>'):'<div class="imgwrap"><div class="noimg"></div></div>';
+      row.onclick=()=>openModal(it);
+      row.innerHTML='<div class="b"><h3>'+it.name+(it.popular?'<span class="pop">Popular</span>':'')+'</h3><div class="price">'+money(it.price)+'</div>'+(it.description?'<p class="desc">'+it.description+'</p>':'')+'</div>'+thumb;
     }
     list.appendChild(row);
   });
   root.appendChild(list);
 });
 
+// item modal
+let curItem=null, qty=1;
+function openModal(it){ curItem=it; qty=1;
+  const img=photo(it);
+  document.getElementById('mhero').src=img||''; document.getElementById('mhero').style.display=img?'block':'none';
+  document.getElementById('mname').textContent=it.name;
+  document.getElementById('mprice').textContent=money(it.price);
+  document.getElementById('mdesc').textContent=it.description||'';
+  document.getElementById('qval').textContent='1'; updateCart();
+  const m=document.getElementById('modal'); m.classList.add('open'); m.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+}
+function closeModal(){ const m=document.getElementById('modal'); m.classList.remove('open'); m.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+function updateCart(){ const p=curItem&&curItem.price!=null?curItem.price*qty:null; document.getElementById('addcart').textContent='Add to cart'+(p!=null?' · '+money(p):''); }
+document.querySelectorAll('[data-close]').forEach(el=>el.onclick=closeModal);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+document.getElementById('qminus').onclick=()=>{qty=Math.max(1,qty-1);document.getElementById('qval').textContent=qty;updateCart();};
+document.getElementById('qplus').onclick=()=>{qty++;document.getElementById('qval').textContent=qty;updateCart();};
+
+// search (filters item rows live, like Owner)
+function wireSearch(id){ const el=document.getElementById(id); if(!el)return;
+  el.addEventListener('input',()=>{ const q=el.value.trim().toLowerCase();
+    document.querySelectorAll('.items .item').forEach(row=>{ row.style.display=(!q||row.dataset.name.includes(q))?'':'none'; });
+    document.querySelectorAll('.cat').forEach(h=>{ const list=h.nextElementSibling; const any=[...list.querySelectorAll('.item')].some(r=>r.style.display!=='none'); h.style.display=any?'':'none'; });
+  });
+}
+wireSearch('msearch-input'); wireSearch('rail-search-input');
+
+// scroll-spy active category
+const spy=new IntersectionObserver((es)=>{ es.forEach(e=>{ if(e.isIntersecting){ const id=e.target.id; document.querySelectorAll('[data-cat]').forEach(a=>a.classList.toggle('active',a.dataset.cat===id)); } }); },{rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('.cat').forEach(h=>spy.observe(h));
+
+document.getElementById('ctaBtn').onclick=()=>{ if(carItems[0])openModal(carItems[0]); };
 if(V==='compare'){ document.getElementById('modebar').textContent='For each dish, two photo options are shown.'; }
 </script>
-</body>
-</html>
+</body></html>
